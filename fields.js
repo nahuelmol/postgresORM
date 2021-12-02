@@ -1,21 +1,21 @@
 var charField = (name, length) => {
-	var entire = `(${name} VARCHAR(${length}))`
+	var entire = `${name} VARCHAR(${length})`
 
 	return entire
 }
 
 var idField = name => {
-	var entire = `(${name} int)`
+	var entire = `${name} int`
 	return entire
 }
 
 var textField = name => {
-	var entire = `(${name} text)`
+	var entire = `${name} VARCHAR(255)`
 	return entire
 }
 
 var floatField = name => {
-	var entire = `(${name} float)`
+	var entire = `${name} float`
 	return entire
 }
 

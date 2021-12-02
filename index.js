@@ -9,7 +9,7 @@ const {
 	build
 } = require('./builder')
 
-require('./dbconn')
+const client = require('./dbconn')
 
 class UserTable {
 	constructor(){
@@ -21,26 +21,50 @@ class UserTable {
 	}
 
 	createTable(build){
-		conn()
 
 		var callback = res => {
-			client.query(res, ['Hello world!'], (err, res) => {
-  				console.log(err ? err.stack : res.rows[0].message)
+			client.query(res,(err, res) => {
+  				if(err){
+  					console.log('callback error: ',err)
+  				}
   				client.end()
 			})
 		}
 
-		console.log(build(this, 'create user_table', callback))
+		console.log(build(this, 'create user_table',callback))
 	}
 
 	deleteTable(build){
-		conn()
 
-		console.log(build(this, 'delete user_table'))
+		var callback = res => {
+			client.query(res, (err, res) => {
+				client.end()
+			})
+		}
+
+		console.log(build(this, 'delete user_table',callback))
 	}
 }
 
-if(module.parent == null){
-	var model = new UserTable()
-	model.createTable(build)
-}
+(function(){
+	client.connect()
+
+	var call = (err,res) => {
+		var fields = []
+		if(err){
+			console.log('err: ',err)
+
+			var model = new UserTable()
+			model.createTable(build)
+		}else{
+			res.fields.forEach(each => {
+				fields.push(each.name)
+			})
+
+			console.log('user_table already exists: ', fields); 
+			client.end() 
+		}
+	}
+
+	client.query("SELECT * FROM user_table;", call)
+})()

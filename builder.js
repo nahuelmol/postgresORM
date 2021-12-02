@@ -29,10 +29,14 @@ const build = (obj,act,call) => {
 	sentence = sentence + '(\n'
 
 	arr.forEach(each => {
-		sentence = sentence +'\t'+ each + ',\n'
+		if(each == arr.slice(-1)){
+			sentence = sentence +'\t'+ each + '\n'
+		}else{
+			sentence = sentence +'\t'+ each + ',\n'
+		}
 	})
 
-	sentence = sentence + ')'
+	sentence = sentence + ');'
 
 	call(sentence)
 }
