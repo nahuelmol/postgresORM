@@ -1,28 +1,42 @@
 const {
 	charField,
-	idField
+	idField, 
+	floatField,
+	textField
 } = require('./fields')
 
 const {
 	build
 } = require('./builder')
 
-function fModel(){
-	this.charField 	= charField('name', 20)
-	this.idField	= idField(1)
-
-	callback(build(this))
-}
+require('./dbconn')
 
 class UserTable {
 	constructor(){
 		this.charField 	= charField('name', 20)
-		this.idField	= idField(1)
+		this.idField	= idField('user_id')
+		this.floatField = floatField('weight')
+		this.textField  = textField('detail')
 
 	}
 
 	createTable(build){
-		console.log(build(this, 'create user_table'))
+		conn()
+
+		var callback = res => {
+			client.query(res, ['Hello world!'], (err, res) => {
+  				console.log(err ? err.stack : res.rows[0].message)
+  				client.end()
+			})
+		}
+
+		console.log(build(this, 'create user_table', callback))
+	}
+
+	deleteTable(build){
+		conn()
+
+		console.log(build(this, 'delete user_table'))
 	}
 }
 

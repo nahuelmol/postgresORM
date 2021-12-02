@@ -4,12 +4,24 @@ var charField = (name, length) => {
 	return entire
 }
 
-var idField = id => {
-	var entire = `(${id} int)`
+var idField = name => {
+	var entire = `(${name} int)`
+	return entire
+}
+
+var textField = name => {
+	var entire = `(${name} text)`
+	return entire
+}
+
+var floatField = name => {
+	var entire = `(${name} float)`
 	return entire
 }
 
 module.exports = {
 	charField,
-	idField
+	idField,
+	textField,
+	floatField
 }
