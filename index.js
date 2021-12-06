@@ -2,7 +2,8 @@ const {
 	charField,
 	idField, 
 	floatField,
-	textField
+	textField,
+	booleanField
 } = require('./fields')
 
 const {
@@ -11,18 +12,34 @@ const {
 
 const client = require('./dbconn')
 
-class UserTable {
-	constructor(){
-		this.charField 	= charField('name', 20)
-		this.idField	= idField('user_id')
-		this.floatField = floatField('weight')
-		this.textField  = textField('detail')
+var call = (err,res) => {
+		var fields = []
+		if(err){
+			console.log('err: ',err)
 
+			var model = new UserTable()
+			model.createTable(build)
+		}else{
+			res.fields.forEach(each => fields.push(each.name))
+
+			console.log('user_table already exists: ', fields); 
+			client.end() 
+		}
+	}
+
+class ModelTable {
+	constructor(){
+
+	}
+
+	updateTable(build){
+		updator(this,'update user_table')
 	}
 
 	createTable(build){
 
 		var callback = res => {
+
 			client.query(res,(err, res) => {
   				if(err){
   					console.log('callback error: ',err)
@@ -46,25 +63,6 @@ class UserTable {
 	}
 }
 
-(function(){
-	client.connect()
 
-	var call = (err,res) => {
-		var fields = []
-		if(err){
-			console.log('err: ',err)
 
-			var model = new UserTable()
-			model.createTable(build)
-		}else{
-			res.fields.forEach(each => {
-				fields.push(each.name)
-			})
-
-			console.log('user_table already exists: ', fields); 
-			client.end() 
-		}
-	}
-
-	client.query("SELECT * FROM user_table;", call)
-})()
+module.exports = { ModelTable }

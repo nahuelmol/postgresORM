@@ -4,6 +4,16 @@ var charField = (name, length) => {
 	return entire
 }
 
+var integerField = (name) => {
+	var entire  = `${name} int`
+	return entire
+}
+
+var booleanField = (name) => {
+	var entire = `${name} bool default ${false}`
+	return entire
+}
+
 var idField = name => {
 	var entire = `${name} int`
 	return entire

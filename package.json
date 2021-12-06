@@ -1,10 +1,11 @@
 {
   "name": "postgresORM",
   "version": "1.0.0",
-  "description": "",
+  "description": "That's it",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "makemigrations":"node app.js",
     "migrate": "node index.js"
   },
   "keywords": [],
@@ -12,5 +13,14 @@
   "license": "ISC",
   "dependencies": {
     "pg": "^8.7.1"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nahuelmol/postgresORM.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nahuelmol/postgresORM/issues"
+  },
+  "homepage": "https://github.com/nahuelmol/postgresORM#readme"
 }
