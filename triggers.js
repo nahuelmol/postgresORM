@@ -30,15 +30,34 @@ const CheckExistence = (name,call) => {
 	client.query(sentence, onRes)
 }
 
+const addColumns = cols => {
+	cols.forEach(eachcol => {
+		var onRes = (err,res) => {
+			if(err){
+				return console.log(err)
+			}
+			console.log(res)
+		}
+
+		client.query(eachcol, onRes)
+	})
+}
+
 const CheckChanges = table => {
 
 	var order = `SELECT * FROM ${table.name}`
-	var arr = Object.keys(this)
+	var arr = Object.values(this)
+	var new_colums = []
 
 	var i = 0
 	arr.forEach(each => {
-		if(!order.includes(each)){
-			return `${each} column does not exists in old table, is new`
+		only_name = each.split(' ')[]
+
+		if(!order.includes(only_name)){
+			console.log(`${only_name} column does not exists in old table, is new`)
+			new_colums(each)
+
+			addColumns()
 		}
 
 		return `without changes in ${table.name}`
