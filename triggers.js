@@ -47,14 +47,25 @@ const CheckChanges = table => {
 }
 
 const Scanner = (tables) => {
+	var table_states = []
+
 	tables.forEach(tbl => {
 		var name = tbl.name
 
 		let callback = res => {
-			if(res){
-				console.log('exists')
-				CheckChanges(tbl)
+			var state = {
+				table:tbl.name,
+				namestate:''
 			}
+
+			if(res){
+				state.namestate = 'exists'
+				CheckChanges(tbl)
+			}else{
+				state.namestate = 'null'
+			}
+
+			table_states.push(state)
 		}
 
 		CheckExistence(name,callback)
