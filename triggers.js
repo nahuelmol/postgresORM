@@ -8,8 +8,21 @@ const newAdminNotice = (tablename) => {
 	END;`
 }
 
-const indexes = (tablename) => {
+const indexes = (order, tablename) => {
+	var index_ = tablename + '_index'
 
+	if(order === 'create'){
+		var sente = `CREATE INDEX ${index_} ON ${tablename}
+				(id,name);`
+		client.query(sente)
+		return
+		
+	}else if(order === 'drop'){
+		var sente = `DROP INDEX ${index_} ON ${tablename};`
+		client.query(sente)
+		return
+	}
+	
 }
 
 const CheckExistence = (name,call) => {
