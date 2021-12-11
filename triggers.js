@@ -1,11 +1,64 @@
 const newAdminNotice = (tablename) => {
 	var trigger_name = tablename + '_trigger'
+
 	var sente = `CREATE OR REPLACE TRIGGER ${trigger_name}
 	BEFORE DELETE OR INSERT OR UPDATE ON ${tablename}
 	WHEN (is_admin == 1)
 	BEGIN 
 		dbms_output.put_line('This is an admin')
 	END;`
+
+	var onRes = (err,res) => {
+		
+		if(err){
+			return 'There is an error at 14 line'
+		}
+
+		console.log('res: ',res)
+	}
+
+	client.query(sente, onRes)
+}
+
+const AdminTableCreate = (tblname) => {
+	var sente = `CREATE OR REPLACE FUNCTION admin_table_create
+					returns return_type 
+   					language plpgsql
+  				as
+				$$
+				declare 
+				begin
+				end;
+				$$`
+
+	var order = `CREATE TRIGGER admin_table
+					AFTER INSERT ON users_table
+					FOR EACH ROW
+    				EXECUTE PROCEDURE admin_table_create();
+				`
+
+	order = sente + order
+
+	var onRes = (err,res) => {
+
+		try{
+			if(err){
+				throw err
+			}
+
+			console.log('res: ',res)
+			return
+
+		}catch(e){
+			console.log('err: ',err)
+			return
+		}
+		
+
+	}
+
+	client.query(order, onRes)
+
 }
 
 const indexes = (order, tablename) => {
